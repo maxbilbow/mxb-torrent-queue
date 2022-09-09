@@ -1,0 +1,12 @@
+{
+    "root": true,
+    "extends": [
+        "recommended"
+    ],
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ]
+    }
+}

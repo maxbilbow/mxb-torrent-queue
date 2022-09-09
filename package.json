@@ -1,0 +1,32 @@
+{
+  "name": "mxb-torrent-queue",
+  "version": "1.0.0-rc",
+  "description": "CLI for queueing torrents",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "nyc mocha -r ts-node/register \"test/**/*.spec.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/maxbilbow/mxb-torrent-queue.git"
+  },
+  "author": "Max Bilbow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxbilbow/mxb-torrent-queue/issues"
+  },
+  "homepage": "https://github.com/maxbilbow/mxb-torrent-queue#readme",
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "@types/yargs": "^17.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "tslog": "^3.3.4",
+    "yargs": "^17.5.1"
+  }
+}
