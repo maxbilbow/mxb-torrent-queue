@@ -50,7 +50,7 @@ function remove(entry: QueueEntry) {
 
 function getQueue(): QueueEntry[] {
     if (!existsSync(QUEUE_FILE)) {
-        mkdirSync(QUEUE_FILE, { recursive: true })
+        mkdirSync(CFG_FIR, { recursive: true })
         writeFileSync(QUEUE_FILE, '[]', "utf-8");
     }
     return require(QUEUE_FILE);
