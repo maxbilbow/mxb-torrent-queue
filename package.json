@@ -17,6 +17,7 @@
     "url": "https://github.com/maxbilbow/mxb-torrent-queue/issues"
   },
   "homepage": "https://github.com/maxbilbow/mxb-torrent-queue#readme",
+  "files": ["dist"],
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^18.7.16",
@@ -32,7 +33,5 @@
     "tslog": "^3.3.4",
     "yargs": "^17.5.1"
   },
-  "bin": {
-    "add": "./dist/bin/add-torrent.js"
-  }
+  "bin": "./dist/bin/index.js"
 }
