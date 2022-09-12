@@ -1,6 +1,5 @@
 import { Logger } from "tslog";
-import getDefaultOptions, { DefaultOptions } from "./get-default-options";
-const VERBOSE = (getDefaultOptions().argv as DefaultOptions).verbose;
+const VERBOSE = process.argv.includes('--verbose');
 export function getLogger(name: string) {
     return new Logger({
         name,
