@@ -8,6 +8,7 @@ interface Options {
 
 const logger = getLogger("runTransmissionCli");
 export default function runTransmissionCli({ downloadPath, torrentUrl }: Options) {
+    logger.info(`Downloading to ${downloadPath}`);
     const transmission = spawn('transmission-cli', ['-w', downloadPath, torrentUrl]);
 
     transmission.stdout.on('data', (data: Buffer) => {
