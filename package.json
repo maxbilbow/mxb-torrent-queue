@@ -1,6 +1,6 @@
 {
   "name": "mxb-torrent-queue",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "CLI for queueing torrents",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "url": "https://github.com/maxbilbow/mxb-torrent-queue/issues"
   },
   "homepage": "https://github.com/maxbilbow/mxb-torrent-queue#readme",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
     "@types/node": "^18.7.16",
