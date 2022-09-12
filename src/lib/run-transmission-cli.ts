@@ -1,32 +1,40 @@
+import { rejects } from "assert";
 import { spawn } from "cross-spawn";
+import { resolve } from "path";
 import { getLogger } from "./common/logger";
 
 interface Options {
-    torrentUrl: string;
-    downloadPath: string;
+    torrent: string;
+    writeTo: string;
 }
 
-const logger = getLogger("runTransmissionCli");
-export default function runTransmissionCli({ downloadPath, torrentUrl }: Options) {
-    logger.info(`Downloading to ${downloadPath}`);
-    const transmission = spawn('transmission-cli', ['-w', downloadPath, torrentUrl]);
+export default function runTransmissionCli({ torrent, writeTo }: Options): Promise<boolean> {
+    return new Promise((resolve) => {
+        const logger = getLogger("runTransmissionCli");
+        logger.info(`Downloading to ${writeTo}`);
+        const transmission = spawn('transmission-cli', ['-w', writeTo, torrent]);
+        
+        transmission.stdout.on('data', (data: Buffer) => {
+            const s = data.toString("utf-8")
+            if (s.includes("seeding")) {
+                logger.info(s)
+                transmission.kill();
+                resolve(true);
+            } else if (s.includes("%")) {
+                logger.info(s);
+            } else {
+                logger.debug(s);
+            }
+        });
 
-    transmission.stdout.on('data', (data: Buffer) => {
-        const s = data.toString("utf-8")
-        if (s.includes("seeding")) {
-            transmission.kill(0);
-        } else if (s.includes("%")) {
-            logger.info(s);
-        } else {
-            logger.debug(s);
-        }
-    });
+        transmission.stdout.on('exit', (code) => {
+            logger.info(`transmission-cli exited with code ${code}`);
+            resolve(false);
+        });
 
-    transmission.stdout.on('exit', (code) => {
-        logger.info(`transmission-cli exited with code ${code}`);
-    });
-
-    transmission.stdout.on('error', (err) => {
-        logger.error(err);
+        transmission.stdout.on('error', (err) => {
+            logger.error(err);
+            resolve(false);
+        });
     });
 }

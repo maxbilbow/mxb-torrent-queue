@@ -3,11 +3,11 @@
 import { homedir } from 'os';
 import path from 'path';
 import getDefaultOptions from '../lib/common/get-default-options';
-import runTransmissionCli from '../lib/run-transmission-cli';
+import { add, poll } from '../lib/queue-manager';
 
 const options = getDefaultOptions()
-    .command('start', 'Start torrent queue', {}, (argv) => console.log('START', argv))
-    .command('stop', 'Stop torrent queue', {}, (argv) => console.log('START', argv))
+    .command('start', 'Start torrent queue', {}, () => poll())
+    .command('stop', 'Stop torrent queue', {}, (argv) => console.log('STOP', argv))
     .command({
         command: 'add <torrent>',
         describe: 'Add a torrent',
@@ -27,7 +27,12 @@ const options = getDefaultOptions()
                 default: path.join(homedir(), 'Videos')
             })
         ,
-        handler: (argv) => runTransmissionCli({ downloadPath: argv.writeTo, torrentUrl: argv.torrent })
+        handler: ({ writeTo, torrent, start }) => {
+            add({ writeTo, torrent })
+            if (start) {
+                return poll();
+            }
+        }
     })
     .strict()
     .help()
