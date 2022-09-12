@@ -4,7 +4,8 @@
   "description": "CLI for queueing torrents",
   "main": "dist/index.js",
   "scripts": {
-    "test": "nyc mocha -r ts-node/register \"test/**/*.spec.ts\""
+    "test": "nyc mocha -r ts-node/register \"./src/test/**/*.spec.ts\"",
+    "build": "tsc --build \"./src/bin\""
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,8 @@
   "dependencies": {
     "tslog": "^3.3.4",
     "yargs": "^17.5.1"
+  },
+  "bin": {
+    "add": "./dist/bin/add-torrent.js"
   }
 }

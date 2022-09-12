@@ -1,9 +1,13 @@
 {
     "extends": "../../generic-tsconfig.json",
     "compilerOptions": {
-    
     },
     "include": [
         "**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        }
     ]
 }

@@ -4,6 +4,12 @@
     "compilerOptions": {
         "rootDir": "./src",
         "outDir": "dist",
-        "strict": true
-    }
+        "strict": true,
+        "resolveJsonModule": true,
+        "alwaysStrict": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "composite": true
+    },
+    "compileOnSave": true
 }

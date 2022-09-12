@@ -1,4 +1,4 @@
-import { exec, execSync, spawn } from "child_process";
+import { spawn } from "child_process";
 import { getLogger } from "./common/logger";
 
 interface Options {
@@ -7,20 +7,24 @@ interface Options {
 }
 
 const logger = getLogger("runTransmissionCli");
-export default function runTransmissionCli({downloadPath, torrentUrl}: Options) {
+export default function runTransmissionCli({ downloadPath, torrentUrl }: Options) {
     const transmission = spawn('transmission-cli', ['-w', downloadPath, torrentUrl]);
-    
+
     transmission.stdout.on('data', (data) => {
-        if (data.includes("seeding")) {
-            transmission.kill();
+        if (data.toString().includes("seeding")) {
+            transmission.kill(0);
+        } else if (data.toString().includes("%")) {
+            logger.info(data);
+        } else {
+            logger.debug(data);
         }
     });
-    
-    transmission.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
+
+    transmission.stdout.on('exit', (code) => {
+        logger.info(`transmission-cli exited with code ${code}`);
     });
-    
-    transmission.on('close', (code) => {
-      console.log(`transmission-cli exited with code ${code}`);
+
+    transmission.stdout.on('error', (err) => {
+        logger.error(err);
     });
 }
