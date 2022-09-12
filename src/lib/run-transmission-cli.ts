@@ -10,13 +10,14 @@ const logger = getLogger("runTransmissionCli");
 export default function runTransmissionCli({ downloadPath, torrentUrl }: Options) {
     const transmission = spawn('transmission-cli', ['-w', downloadPath, torrentUrl]);
 
-    transmission.stdout.on('data', (data) => {
-        if (data.toString().includes("seeding")) {
+    transmission.stdout.on('data', (data: Buffer) => {
+        const s = data.toString("utf-8")
+        if (s.includes("seeding")) {
             transmission.kill(0);
-        } else if (data.toString().includes("%")) {
-            logger.info(data);
+        } else if (s.includes("%")) {
+            logger.info(s);
         } else {
-            logger.debug(data);
+            logger.debug(s);
         }
     });
 
