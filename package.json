@@ -1,6 +1,6 @@
 {
   "name": "mxb-torrent-queue",
-  "version": "1.0.0-rc",
+  "version": "1.0.0-rc.0",
   "description": "CLI for queueing torrents",
   "main": "dist/index.js",
   "scripts": {
